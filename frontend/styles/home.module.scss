@@ -20,7 +20,7 @@
             width: 90.5vw;
             display: flex;
             flex-direction: row;
-            justify-content: end;
+            justify-content: flex-end;
             align-items: center;
             button{
                 width: 130px;
@@ -106,6 +106,7 @@
             }
         h3{
             text-align: center;
+            color: #6824E1;
         }
     }
 
@@ -153,7 +154,7 @@
         margin-top: 20px;
         width: 40.8vw;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
     }
 }
 

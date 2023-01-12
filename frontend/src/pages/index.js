@@ -29,6 +29,7 @@ export default function Home() {
 
   useEffect(()=>{
     LoadNoticias()
+  
   }, [])
 
   const handleLeftScroll = (e)=> {
@@ -51,7 +52,7 @@ export default function Home() {
             <Image src={LogoImg} alt='Imagem logo'/>
             <div className={styles.menuPrincipal}>
               <Link href={'/login'}>Login</Link>
-              <button href='/cadastro'>Comece já!</button>
+            <Link href='/cadastro'><button href='/cadastro'>Comece já!</button></Link>
             </div>
         </header>
       </div>
@@ -64,19 +65,19 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.carrosselItens}>
           <div className={styles.item}>
-            <span><FaGamepad /></span>
+            <span><FaGamepad color='#6824E1' /></span>
             <h3>Controle de despezas</h3>
           </div>
           <div className={styles.item}>
-            <span><RiBankFill /></span>
+            <span><RiBankFill color='#6824E1'/></span>
             <h3>Conciliação bancária</h3>
           </div>
           <div className={styles.item}>
-            <span><FaHandHoldingUsd /></span>
+            <span><FaHandHoldingUsd color='#6824E1' /></span>
             <h3>Planejador financeiro</h3>
           </div>
           <div className={styles.item}>
-            <span><FaPiggyBank /></span>
+            <span><FaPiggyBank color='#6824E1' /></span>
             <h3>Investimentos</h3>
           </div>
         </div>
@@ -94,14 +95,15 @@ export default function Home() {
           <h2>Aprenda sobre finanças</h2>
           <div className={styles.noticeCarrocel} ref={carrossel}>
           {noticias.map((item)=>{
+            
             return(
               <article key={item.abstract}>
-                <img width={20} height={20} src={`${item.multimedia[0].url}`}/>
+                <img width={20} height={20} src={`${item.multimedia}`}/>
                 <div className={styles.conteudo}>
                   <h4>{item.des_facet[0]}</h4>
                   <span>{item.abstract}</span>
                 </div>
-                  <button >Leia mais</button>
+                <a href={item.url} target='blank'><button >Leia mais</button></a>
                 </article>
             )
           })}

@@ -5,12 +5,14 @@ import { getTransacaoController } from "./Controlller/Transacao/getTransacaoCont
 import { postTransacaoController } from "./Controlller/Transacao/postTransacaoController";
 import { deleteTransacaoController } from "./Controlller/Transacao/deleteTransacaoController";
 import { putTransacaoController } from "./Controlller/Transacao/putTransacaoController";
+import { AuthController } from './Controlller/User/AuthController'
 
 const rota = Router()
 
 //USER
 rota.get('/user', new getUserController().handle)
 rota.post('/user', new postUserController().handle)
+rota.post('/login', new AuthController().handle)
 
 //TRANSAÇÕES
 rota.get('/transacao', new getTransacaoController().handle)

@@ -1,4 +1,5 @@
 import prismaClient from "../../prisma/config"
+import { hash } from "bcryptjs"
 
 interface ipostUserService{
     nome: string, 
@@ -23,12 +24,19 @@ class postUserService{
             throw new Error('E-mail ja cadastrado!')
         }
 
+        const passwordHash = await hash(senha, 8)
+
         const user = await prismaClient.user.create({
             data:{
                 nome: nome,
                 sobrenome: sobrenome,
                 email: email,
-                senha: senha
+                senha: passwordHash
+            }, select:{
+                id: true,
+                nome:true,
+                sobrenome: true,
+                email:true
             }
         })
         return {user}
