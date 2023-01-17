@@ -23,13 +23,12 @@ export default function Home() {
     .then((result)=> result.json())
     .then((json)=> {
       setNoticias(json.results)
-      console.log(noticias)
     })
   }
 
   useEffect(()=>{
     LoadNoticias()
-  
+    //console.log(noticias[0].multimedia[0].url)
   }, [])
 
   const handleLeftScroll = (e)=> {
@@ -87,7 +86,7 @@ export default function Home() {
             <p>Lorem ipsum dolor sit amet. Qui nostrum autem et vitae dicta sed quia facere a reiciendis earum sed quos eveniet. Id nemo porro sed mollitia autem aut explicabo consequatur aut minima aperiam! Eos quam dignissimos id fuga cupiditate qui iusto galisum.</p>
           </div>
           <div className={styles.dashImg}>  
-            <Image src={DashImg}/>
+            <Image src={DashImg} alt={'Dashboard Image'} />
           </div>
         </div>
         <div className={styles.ultimasNoticias}>
@@ -95,10 +94,9 @@ export default function Home() {
           <h2>Aprenda sobre finanças</h2>
           <div className={styles.noticeCarrocel} ref={carrossel}>
           {noticias.map((item)=>{
-            
             return(
-              <article key={item.abstract}>
-                <img width={20} height={20} src={`${item.multimedia}`}/>
+              <article key={item.short_url}>
+                <img width={20} height={20} src={`${item.multimedia}`} alt={'Imagem do post'}/>
                 <div className={styles.conteudo}>
                   <h4>{item.des_facet[0]}</h4>
                   <span>{item.abstract}</span>
@@ -119,25 +117,25 @@ export default function Home() {
           <div className={styles.opn}>
             <div className={styles.opniao}>
               <h4>"Lorem ipsum dolor!"</h4>
-              <Image src={estrela}/>
+              <Image src={estrela} alt={'Estrela'} />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis neque sit.</p>
             </div>
 
             <div className={styles.opniao}>
               <h4>"Lorem ipsum dolor!"</h4>
-              <Image src={estrela}/>
+              <Image src={estrela} alt={'Estrela'} />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis neque sit.</p>
             </div>
 
             <div className={styles.opniao}>
               <h4>"Lorem ipsum dolor!"</h4>
-              <Image src={estrela} />
+              <Image src={estrela} alt={'Estrela'} />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis neque sit.</p>
             </div>
 
             <div className={styles.opniao}>
               <h4>"Lorem ipsum dolor!"</h4>
-              <Image src={estrela} />
+              <Image src={estrela} alt={'Estrela'} />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis neque sit.</p>
             </div>
           </div>

@@ -35,10 +35,11 @@ export default function Login(){
                 maxAge: 60*60*24*30,
                 path: "/"
             })
-            setUser({ id, nome, sobrenome, token })
-            
-            base.defaults.headers['Authorization'] = `Bearer ${token}`
 
+            setUser({ id, nome, sobrenome, token })
+            const teste = await localStorage.setItem('DataUser', JSON.stringify(nome))
+            base.defaults.headers['Authorization'] = `Bearer ${token}`
+            console.log(nome)
             Router.push('/dashboard')
         }catch(error){
             console.log(error)

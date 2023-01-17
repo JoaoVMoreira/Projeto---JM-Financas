@@ -1,31 +1,37 @@
-import { useState } from 'react'
 import Modal from 'react-modal'
+import { useState } from 'react'
 import base from '../../axios/config'
-import styles from './addModal.module.scss'
+import styles from '../modal/addModal.module.scss'
 import { IoMdArrowRoundBack } from "react-icons/io";
 
+export default function EditModal({conteudo, isOpen, close}){
 
-export default function AddModal({conteudo, close, isOpen}){
+    const [titulo, setTitulo] = useState('')
+    const [tipo, setTipo] = useState('')
+    const [categoria, setCategoria] = useState('')
+    const [valor, setValor] = useState('')
+    const [descricao, setDescricao] = useState('')
+    const [transacao, setTransacoes] = useState([])
+    
 
-    const[titulo, setTitulo] = useState('')
-    const[tipo, setTipo] = useState('')
-    const[categoria, setCategoria] = useState('')
-    const[valor, setValor] = useState('')
-    const[descricao, setDescricao] = useState('')
-
-    async function addTransacao(){
+    async function handleEdit(){
         try{
-            const transacao = await base.post('/transacao', {
+            const edit = await base.put('/transacao', {
+                where:{
+                    id: conteudo.id
+                },
                 titulo: titulo,
                 tipo: tipo,
-                categoria: categoria,
+                categoria: categoria, 
+                valor: parseFloat(valor),
                 descricao: descricao,
-                valor: parseFloat(valor)
-            })
-            alert('Transação adicionada com sucesso')
+                id: conteudo.id
+            }) 
+
+            alert('Transação atualizada com sucesso')
             close()
         }catch(error){
-            alert('Ocorreu um erro')
+            alert('Erro ao atualizar. Tente novamente!')
         }
     }
 
@@ -37,23 +43,24 @@ export default function AddModal({conteudo, close, isOpen}){
             className={styles.modal}>
             <div className={styles.conteiner}>
                 <div className={styles.header}>
-                    <h1>Adicionar movimentação</h1>
+                    <h1>Editar transação</h1>
                     <button onClick={close}><IoMdArrowRoundBack /></button>
-                </div>
+                </div>  
+
                 <div className={styles.form}>
-                    <input placeholder='Titulo' value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+                    <input placeholder='Titulo' value={titulo} onChange={(e)=> setTitulo(e.target.value)}/>
                     <div className={styles.form2}>
                         <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
                             <option disabled>Tipo de movimentação</option>
                             <option value='Ganho'>Ganho</option>
                             <option value='Investimento'>Investimento</option>
                             <option value='Gasto'>Gasto</option>
-                        </select>    
+                        </select> 
                         <input placeholder='Categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)} />
                     </div>
                     <input placeholder='Valor' value={valor} onChange={(e) => setValor(e.target.value)} />
                     <textarea placeholder='Descrição' value={descricao} onChange={(e) => setDescricao(e.target.value)} />
-                    <button onClick={addTransacao}>Cadastrar</button>
+                    <button onClick={handleEdit}>Alterar</button>
                 </div>
             </div>
         </Modal>
