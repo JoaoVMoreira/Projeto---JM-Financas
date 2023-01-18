@@ -13,9 +13,8 @@ import { BsFillCircleFill, BsInfoSquareFill } from "react-icons/bs";
 import { TiEdit } from "react-icons/ti";
 import EditModal from '../../components/editModal'
 import InfoModal from '../../components/infoModal'
-import styles from './dashboard.module.scss'
-import { GrAddCircle } from "react-icons/gr";
-import { BiLogOut } from "react-icons/bi";
+import styles from './dashboard.module.scss';
+import { BiLogOut, BiAddToQueue } from "react-icons/bi";
 import { destroyCookie } from 'nookies'
 import Router from 'next/router'
 
@@ -99,15 +98,19 @@ export default function Dashboard(){
         
         //Setando soma dos valores
         const gastosTot = graficoGeral[1]
-        const invTot = graficoGeral[2]
+        const invTot = graficoGeral[3]
         const disp = graficoGeral[2]
-        setTotGasto(gastosTot[1])
-        setTotInv(invTot[1])
-        const totDisponivel = disp[1] - (totGasto + totInv)
-        setDisponivel(totDisponivel)
+        setTotGasto(gastosTot[1].toFixed(2))
+        setTotInv(invTot[1].toFixed(2))
+        const totDisponivel = disp[1] - (gastosTot[1] + invTot[1])
+        setDisponivel(totDisponivel.toFixed(2))
 
         const name = localStorage.getItem('DataUser')
         setNome(name)
+    }
+
+    async function setDados(){
+        console.log(geral)
     }
 
     async function logOut(){
@@ -115,13 +118,15 @@ export default function Dashboard(){
         Router.push('/')
     }
 
-    
+    const options = {
+        
+    } 
     
     
     
     useEffect(() => {
         getTransacoes() 
-        console.log(disponivel)
+        setDados()
     }, [])
     return(
         <>
@@ -132,74 +137,87 @@ export default function Dashboard(){
         <header>
             <Image src={LogoImg} alt='Logo'/>
             <button onClick={logOut} className={styles.logOut}><BiLogOut /></button>
-            <button onClick={() => { openAddModal() }}>Adicionar movimentação <GrAddCircle/></button>
+                    <button onClick={() => { openAddModal() }}>Adicionar movimentação <BiAddToQueue fontSize={'20px'} color='#6824E1' /></button>
         </header>
         <div className={styles.content}>
             <h1>Olá, {nome}!</h1>
 
-            <div className={styles.content2}>
-                <div className={styles.saldos}>
-                    <div className={styles.saldoUni}>
-                        <h3>Saldo disponivel</h3>
-                        <span>R${disponivel.toFixed(2)}</span>
+            {!transacoes ? (
+                    <div>
+                        <h1>Não constam transações</h1>
                     </div>
-                    <div className={styles.saldoUni}>
-                        <h3>Total gasto</h3>
-                        <span>R${totGasto.toFixed(2)}</span>
-                    </div>
-                    <div className={styles.saldoUni}>
-                        <h3>Total Investido</h3>
-                        <span>R${totInv.toFixed(2)}</span>
-                    </div>
-                </div>
-                <div className={styles.distribGastos}>
-                    <h3>Distribuição de gastos</h3>
-                    <div className={styles.teste}>
-                        <Chart id={styles.id} chartType='PieChart' data={gastos}/>
-                    </div>
-                </div>
-            </div>
+            ): (
+                <>
+                                <div className={styles.content2}>
+                                    <div className={styles.saldos}>
+                                        <div className={styles.saldoUni}>
+                                            <h3>Saldo disponivel</h3>
+                                            <span><span id={styles.ganho}>R$</span>{disponivel}</span>
+                                        </div>
+                                        <div className={styles.saldoUni}>
+                                            <h3>Total gasto</h3>
+                                            <span><span id={styles.gasto}>R$</span>{totGasto}</span>
+                                        </div>
+                                        <div className={styles.saldoUni}>
+                                            <h3>Total Investido</h3>
+                                            <span><span id={styles.investimento}>R$</span>{totInv}</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.distribGastos}>
+                                        <h3>Distribuição de gastos</h3>
+                                        <Chart id={styles.chart} chartType='PieChart' options={options} data={gastos} />
+                                    </div>
+                                </div>
 
-            <div className={styles.content3}>
-                <div className={styles.observacao}>
-                    <h2>Observações</h2>
-                            <p>Lorem ipsum dolor sit amet. Qui nostrum autem et vitae dicta sed quia facere a reiciendis earum sed quos eveniet. Id nemo porro sed mollitia autem aut explicabo consequatur aut minima aperiam! Eos quam dignissimos id fuga cupiditate qui iusto galisum. Lorem ipsum dolor sit amet. Qui nostrum autem et vitae dicta sed quia facere a reiciendis earum sed quos eveniet. Id nemo porro sed mollitia autem aut explicabo consequatur aut minima aperiam! Eos quam dignissimos id fuga cupiditate qui iusto galisum.</p>
-                </div>
-                <div className={styles.investimentos}>
-                    <h2>Distribuição de investimentos</h2>
-                    <Chart chartType='PieChart' data={investimento} width={"100%"} />
-                </div>
-            </div>
+                                <div className={styles.content3}>
+                                    <div className={styles.observacao}>
+                                        <h2>Observações</h2>
+                                        <p>Lorem ipsum dolor sit amet. Qui nostrum autem et vitae dicta sed quia facere a reiciendis earum sed quos eveniet. Id nemo porro sed mollitia autem aut explicabo consequatur aut minima aperiam! Eos quam dignissimos id fuga cupiditate qui iusto galisum. Lorem ipsum dolor sit amet. Qui nostrum autem et vitae dicta sed quia facere a reiciendis earum sed quos eveniet. Id nemo porro sed mollitia autem aut explicabo consequatur aut minima aperiam! Eos quam dignissimos id fuga cupiditate qui iusto galisum.</p>
+                                    </div>
+                                    <div className={styles.investimentos}>
+                                        <h2>Distribuição de investimentos</h2>
+                                        <Chart chartType='PieChart' data={investimento} width={"100%"} />
+                                    </div>
+                                </div>
 
-            <div className={styles.content4}>
-            <div className={styles.Saldogeral}>
-            <h2>Distribuição geral</h2>
-            <Chart chartType='PieChart' data={geral} width={"100%"} />
-            </div>
+                                <div className={styles.content4}>
+                                    <div className={styles.Saldogeral}>
+                                        <h2>Distribuição geral</h2>
+                                        <Chart chartType='PieChart' data={geral} width={"100%"} />
+                                    </div>
 
-            <Image src={dashImg} alt='Imagem do dashboard'/>
-            </div>
+                                    <Image src={dashImg} alt='Imagem do dashboard' />
+                                </div>
 
-                    <button id={styles.addBtn} onClick={() => { openAddModal() }}>Adicionar movimentação <GrAddCircle/></button>
+                                <button id={styles.addBtn} onClick={() => { openAddModal() }}>Adicionar movimentação <BiAddToQueue /></button>
 
-            <div className={styles.content5}>
-                <h2>Transações</h2>
-                <table>
-                    <tbody>
-                        {transacoes.map((value)=> {
-                            return(
-                                <tr key={value.id}>
-                                    <td><BsFillCircleFill style={{fontcolor: value.categoria == 'Investimento' ? '#fad02c' : "green"}}/></td>
-                                    <td>{value.titulo}</td>
-                                    <td>R${value.valor.toFixed(2)}</td>
-                                    <td><button onClick={() => handleEdit(value)}><TiEdit /></button></td>
-                                    <td><button onClick={() => handleInfos(value)}><BsInfoSquareFill /></button></td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-            </div>
+                                <div className={styles.content5}>
+                                    <h2>Transações</h2>
+                                    <table>
+                                        <tbody>
+                                            {transacoes.map((value) => {
+                                                var teste = 'Yellow'
+                                                if (value.tipo === "Gasto"){
+                                                    teste = "red"
+                                                } else if (value.tipo === "Ganho"){
+                                                    teste = "green"
+                                                }
+                                                return (
+                                                    <tr key={value.id}>
+                                                        <td><BsFillCircleFill color={teste}/></td>
+                                                        <td>{value.titulo}</td>
+                                                        <td>R${value.valor.toFixed(2)}</td>
+                                                        <td><button onClick={() => handleEdit(value)}><TiEdit /></button></td>
+                                                        <td><button onClick={() => handleInfos(value)}><BsInfoSquareFill /></button></td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                </>
+            )}
+            
 
         </div>
         {showAddModal && (
