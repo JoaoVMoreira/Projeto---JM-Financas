@@ -15,7 +15,7 @@ export default function AddModal({conteudo, close, isOpen}){
 
     async function addTransacao(){
         try{
-            const transacao = await base.post('/transacao', {
+            const transacao = await base.post('/transacao', { //Cadastrando transação
                 titulo: titulo,
                 tipo: tipo,
                 categoria: categoria,

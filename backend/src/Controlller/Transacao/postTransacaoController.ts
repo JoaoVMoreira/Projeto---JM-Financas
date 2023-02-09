@@ -3,7 +3,7 @@ import { postTransacaoService } from '../../Service/Transacao/postTransacaoServi
 
 class postTransacaoController{
     async handle(req: Request, res: Response){
-        const {titulo, tipo, categoria, descricao, valor} = req.body
+        const {titulo, tipo, categoria, descricao, valor} = req.body //Valores sao informados a partir do frontend
         const PostTransacaoService = new postTransacaoService()
         const transacao = await PostTransacaoService.execute({ titulo, tipo, categoria, descricao, valor })
         return res.json(transacao)

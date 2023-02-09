@@ -16,7 +16,7 @@ export default function EditModal({conteudo, isOpen, close}){
 
     async function handleEdit(){
         try{
-            const edit = await base.put('/transacao', {
+            const edit = await base.put('/transacao', { // Realizando atualização dos dados 
                 where:{
                     id: conteudo.id
                 },

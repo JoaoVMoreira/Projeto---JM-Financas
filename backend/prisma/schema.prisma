@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model User{ //Tabela de users
   id String @id @default(uuid())
   nome String
   sobrenome String
@@ -19,7 +19,7 @@ model User{
   @@map("user")
 }
 
-model transacao{
+model transacao{ //Tabela de transações
   id String @id @default(uuid())
   titulo String
   tipo String

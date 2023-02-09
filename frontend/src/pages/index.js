@@ -15,28 +15,27 @@ import { useEffect, useRef, useState } from 'react'
 export default function Home() {
 
   const [noticias, setNoticias] = useState([])
-  const carrossel = useRef(null)
+  const carrossel = useRef(null) //Referencia nula 
 
-  async function LoadNoticias(){
-    let url = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=AgPNGMICW4hI8qpcmBDy8jzDjqTdOhzH`
-    fetch(url)
-    .then((result)=> result.json())
+  async function LoadNoticias(){ //Função para carregar noticias
+    let url = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=AgPNGMICW4hI8qpcmBDy8jzDjqTdOhzH` //URL da requisição http de noticias
+    fetch(url) //Rodando a variavel url
+    .then((result)=> result.json()) //Convertendo result em json
     .then((json)=> {
-      setNoticias(json.results)
+      setNoticias(json.results) //Setando result na state noticias
     })
   }
 
   useEffect(()=>{
-    LoadNoticias()
-    //console.log(noticias[0].multimedia[0].url)
+    LoadNoticias() //Carregando load Noticias
   }, [])
 
-  const handleLeftScroll = (e)=> {
+  const handleLeftScroll = (e)=> { //Carrossel de noticias, botão esquerdo
     e.preventDefault()
     carrossel.current.scrollLeft -= carrossel.current.offsetWidth
   }
 
-  const handleRightScroll = (e) => {
+  const handleRightScroll = (e) => { //Carrossel de noticias, botão direito
     e.preventDefault()
     carrossel.current.scrollLeft += carrossel.current.offsetWidth
   }
@@ -93,7 +92,7 @@ export default function Home() {
           <h3>Ultimas noticias</h3>
           <h2>Aprenda sobre finanças</h2>
           <div className={styles.noticeCarrocel} ref={carrossel}>
-          {noticias.map((item)=>{
+          {noticias.map((item)=>{ //Listando as noticias
             return(
               <article key={item.short_url}>
                 <img width={20} height={20} src={`${item.multimedia}`} alt={'Imagem do post'}/>

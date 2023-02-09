@@ -7,11 +7,12 @@ import { deleteTransacaoController } from "./Controlller/Transacao/deleteTransac
 import { putTransacaoController } from "./Controlller/Transacao/putTransacaoController";
 import { AuthController } from './Controlller/User/AuthController'
 
+//Definindo a função rota
 const rota = Router()
 
 //USER
 rota.get('/user', new getUserController().handle)
-rota.post('/user', new postUserController().handle)
+rota.post('/user', new postUserController().handle) 
 rota.post('/login', new AuthController().handle)
 
 //TRANSAÇÕES

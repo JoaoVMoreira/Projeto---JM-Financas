@@ -8,7 +8,7 @@ interface iputTransacaoService{
     descricao: string, 
     valor: number
 }
-
+//Atualização das transações já cadastradas
 class putTransacaoService{
     async execute({categoria, descricao, id, tipo, titulo, valor }: iputTransacaoService){
         const transacao = await prismaClient.transacao.update({

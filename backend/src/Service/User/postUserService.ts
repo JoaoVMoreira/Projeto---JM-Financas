@@ -7,26 +7,26 @@ interface ipostUserService{
     email: string,
     senha: string
 }
-
+//Cadastro de user
 class postUserService{
     async execute({email, nome, senha, sobrenome }: ipostUserService){
         if(nome == '' || email == '' || senha == '' || sobrenome == ''){
             throw new Error('Favor preencher todos os campos')
         }
 
-        const jaExiste = await prismaClient.user.findFirst({
+        const jaExiste = await prismaClient.user.findFirst({ //Verificando se tem usuario cadastrado com o e-mail informado
             where:{
                 email: email
             }
         })
 
-        if(jaExiste){
+        if(jaExiste){ //Se já existe o e-mail, retorna o erro 
             throw new Error('E-mail ja cadastrado!')
         }
 
-        const passwordHash = await hash(senha, 8)
+        const passwordHash = await hash(senha, 8) //Criptografando a senha
 
-        const user = await prismaClient.user.create({
+        const user = await prismaClient.user.create({ //Criando o usuário 
             data:{
                 nome: nome,
                 sobrenome: sobrenome,

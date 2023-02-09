@@ -18,11 +18,11 @@ export default function Cadastro() {
     const [senha, setSenha] = useState('')
 
     async function Signup(){
-        if(nome === '' || sobrenome === '' || email === '' || senha === ''){
+        if(nome === '' || sobrenome === '' || email === '' || senha === ''){ //Verificando se todos os dados foram informados 
             alert('Favor preencher todos os campos!')
         }
-        const response = base.post('/user', {
-            nome, sobrenome, email, senha
+        const response = base.post('/user', { //Realizando o cadastro de usuários
+            nome, sobrenome, email, senha 
         })
         Router.push("/login")
     }
@@ -53,7 +53,7 @@ export default function Cadastro() {
     )
 }
 
-export const getServerSideProps = canSSRGuest(async(ctx)=>{
+export const getServerSideProps = canSSRGuest(async(ctx)=>{ //Liberando acesso somente a usuários não logaodos
     return{
         props: {}
     }

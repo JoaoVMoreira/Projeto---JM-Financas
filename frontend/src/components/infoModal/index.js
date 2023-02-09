@@ -6,17 +6,19 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function InfoModal({conteudo, close, isOpen}){
 
-    var teste = 'Yellow'
+
+    //Defininfo cores dos circulos presentes no modal
+    var colorCircle = 'Yellow'
     if (conteudo.tipo === "Gasto") {
-        teste = "red"
+        colorCircle = "red"
     } else if (conteudo.tipo === "Ganho") {
-        teste = "green"
+        colorCircle = "green"
     }
 
 
     async function handleDelete(){
         try{
-            const deleteTransacao = await base.delete('/transacao',{
+            const deleteTransacao = await base.delete('/transacao',{ //Deletando transação
                 params:{
                     id: conteudo.id
                 }
@@ -37,7 +39,7 @@ export default function InfoModal({conteudo, close, isOpen}){
         className={styles.modal}>
             <div className={styles.conteiner}>
                 <div className={styles.header}>
-                    <h1><BsFillCircleFill color={teste}/>{conteudo.titulo}</h1>
+                    <h1><BsFillCircleFill color={colorCircle}/>{conteudo.titulo}</h1>
                     <button onClick={close}><IoMdArrowRoundBack /></button>
                 </div>
                 <div className={styles.content}>

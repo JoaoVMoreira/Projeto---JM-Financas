@@ -37,21 +37,21 @@ export default function Dashboard(){
     const[disponivel, setDisponivel] = useState([])
     const[nome, setNome] = useState('')
 
-    async function openAddModal(value){
+    async function openAddModal(value) { //Criando modal de inclusão
         setShowAddModal(!showAddModal)
 
         getTransacoes()
         setDetails(value)
     }
 
-    async function handleEdit(value){
+    async function handleEdit(value) {//Criando modal de Edição
         setShowEditModal(!showEditModal)
 
         getTransacoes()
         setDetails(value)
     }
 
-    async function handleInfos(value){
+    async function handleInfos(value){ //Criando modal de infos
         setShowInfoModal(!showInfoModal)
 
         getTransacoes()
@@ -109,24 +109,15 @@ export default function Dashboard(){
         setNome(name)
     }
 
-    async function setDados(){
-        console.log(geral)
-    }
-
-    async function logOut(){
+    async function logOut(){ //Função de logOut, destruindo o cookie que contem o token
         destroyCookie(undefined, '@authToken')
         Router.push('/')
     }
-
-    const options = {
-        
-    } 
     
     
     
     useEffect(() => {
-        getTransacoes() 
-        setDados()
+        getTransacoes() //Capturando os daddos
     }, [])
     return(
         <>
@@ -142,7 +133,7 @@ export default function Dashboard(){
         <div className={styles.content}>
             <h1>Olá, {nome}!</h1>
 
-            {!transacoes ? (
+            {!transacoes ? ( //Caso nao tenham transações cadastradas é renderizado o H1 abaixo
                     <div>
                         <h1>Não constam transações</h1>
                     </div>
@@ -195,7 +186,7 @@ export default function Dashboard(){
                                     <h2>Transações</h2>
                                     <table>
                                         <tbody>
-                                            {transacoes.map((value) => {
+                                            {transacoes.map((value) => { //Listado transações 
                                                 var teste = 'Yellow'
                                                 if (value.tipo === "Gasto"){
                                                     teste = "red"
@@ -220,21 +211,21 @@ export default function Dashboard(){
             
 
         </div>
-        {showAddModal && (
+        {showAddModal && (//Apresentando modal de inclusões
             <AddModal
             conteudo={details}
             close={openAddModal}
             isOpen={showAddModal}/>
         )}
 
-        {showEditModal &&(
+        {showEditModal && ( //Apresentando modal de Edições
             <EditModal
             conteudo={details}
             close={handleEdit}
             isOpen={showEditModal} />
         )}
 
-        {showInfoModal && (
+        {showInfoModal && ( //Apresentando modal de informações
             <InfoModal
                 close={handleInfos}
                 conteudo={details}
@@ -247,7 +238,7 @@ export default function Dashboard(){
     )
 }
 
-export const getServerSideProps = canSSRAuth(async(ctx)=>{
+export const getServerSideProps = canSSRAuth(async(ctx)=>{ //Setando como uma pagina que somente usuarios logados podem acessar
     return{
         props:{}
     }

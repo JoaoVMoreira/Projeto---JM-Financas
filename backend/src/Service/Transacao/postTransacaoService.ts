@@ -10,7 +10,7 @@ interface ipostTransacaoService{
 
 class postTransacaoService{
     async execute({categoria, descricao, tipo, titulo, valor }: ipostTransacaoService){
-        const transacao = await prismaClient.transacao.create({
+        const transacao = await prismaClient.transacao.create({ //CADASTRO DE TRANSAÇÕES
             data: {
                 titulo: titulo,
                 tipo: tipo,
