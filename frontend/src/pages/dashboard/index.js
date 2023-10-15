@@ -156,7 +156,7 @@ export default function Dashboard(){
                                     </div>
                                     <div className={styles.distribGastos}>
                                         <h3>Distribuição de gastos</h3>
-                                        <Chart id={styles.chart} chartType='PieChart' options={options} data={gastos} />
+                                        <Chart id={styles.chart} chartType='PieChart' options={AddModal} data={gastos} />
                                     </div>
                                 </div>
 
